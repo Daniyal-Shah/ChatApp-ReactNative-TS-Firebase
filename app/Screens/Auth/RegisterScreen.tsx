@@ -14,15 +14,16 @@ import React, {useState} from 'react';
 import {authScreen_styles} from '../../Utils/Styles';
 import CustomButton from '../../Components/Custom/CustomButton';
 import CustomInputField from '../../Components/Custom/CustomInputField';
-
+import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {navigate} from '../../Helper/navigationHelper';
+import {authStackNavigationType} from '../../Models/Navigation';
 
-const RegisterScreen = ({route, navigation}: any) => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const {navigate} = useNavigation<authStackNavigationType>();
   return (
     <View style={authScreen_styles.container}>
       <Image

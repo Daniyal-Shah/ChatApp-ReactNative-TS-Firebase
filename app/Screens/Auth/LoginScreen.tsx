@@ -1,28 +1,26 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import {
-  Text,
-  View,
-  Button,
-  Dimensions,
-  TouchableOpacity,
-  StatusBar,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import React, {useState} from 'react';
 import {authScreen_styles} from '../../Utils/Styles';
 import CustomButton from '../../Components/Custom/CustomButton';
 import CustomInputField from '../../Components/Custom/CustomInputField';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
-import {navigate} from '../../Helper/navigationHelper';
+import {
+  appStackNavigationType,
+  authStackNavigationType,
+  rootStackNavigationType,
+} from '../../Models/Navigation';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigation = useNavigation();
+  const authStackNavigate = useNavigation<authStackNavigationType>();
+  const appStackNavigate = useNavigation<appStackNavigationType>();
+  const rootStackNavigate = useNavigation<rootStackNavigationType>();
 
   return (
     <View style={authScreen_styles.container}>
@@ -62,6 +60,9 @@ const LoginScreen = () => {
               title={'Login'}
               btnStyles={undefined}
               textStyles={undefined}
+              onPress={() => {
+                // rootStackNavigate.navigate('AppStack');
+              }}
             />
             <View style={authScreen_styles.linkContainer}>
               <Text style={authScreen_styles.simpleText}>
@@ -70,8 +71,7 @@ const LoginScreen = () => {
               <Text
                 style={authScreen_styles.link}
                 onPress={() => {
-                  console.log('Log');
-                  // navigate('RegisterScreen');
+                  authStackNavigate.navigate('RegisterScreen');
                 }}>
                 {' '}
                 Sign Up{' '}

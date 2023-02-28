@@ -10,7 +10,7 @@ const RootNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="AuthStack"
+        initialRouteName="AppStack"
         screenOptions={{
           gestureEnabled: true,
           gestureDirection: 'horizontal',

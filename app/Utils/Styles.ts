@@ -51,3 +51,19 @@ export const authScreen_styles = StyleSheet.create({
     fontWeight: '800',
   },
 });
+
+export const allUser_styles = StyleSheet.create({
+  container: {
+    // position: 'relative',
+    flex: 1,
+    width: screenDimensions.width,
+    padding: 8,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    // justifyContent: 'center',
+  },
+
+  contentContainer: {
+    alignItems: 'center',
+  },
+});

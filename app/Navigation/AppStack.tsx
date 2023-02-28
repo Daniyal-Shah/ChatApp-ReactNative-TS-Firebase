@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from '../Screens/Home/HomeScreen';
-import SingleChatScreen from '../Screens/Home/SingleChatScreen';
+import ChatScreen from '../Screens/Chat/ChatScreen';
 import AllUsersScreen from '../Screens/User/AllUsersScreen';
 import {AppStackParamList} from '../Models/Navigation';
 
@@ -15,10 +14,9 @@ export default function AppStack() {
         gestureDirection: 'horizontal',
         headerShown: false,
       }}
-      initialRouteName="HomeScreen">
-      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      initialRouteName="AllUserScreen">
       <Stack.Screen name="AllUserScreen" component={AllUsersScreen} />
-      <Stack.Screen name="SingleChatScreen" component={SingleChatScreen} />
+      <Stack.Screen name="ChatScreen" component={ChatScreen} />
     </Stack.Navigator>
   );
 }
