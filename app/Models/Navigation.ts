@@ -11,3 +11,7 @@ export type AppStackParamList = {
   AllUserScreen: undefined;
   SingleChatScreen: undefined;
 };
+
+export interface RootStackParamList
+  extends AuthStackParamList,
+    AppStackParamList {}
