@@ -9,12 +9,25 @@ import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {authStackNavigationType} from '../../Models/Navigation';
-
+import {api} from '../../Api/Api';
+import uuid from 'react-native-uuid';
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation<authStackNavigationType>();
+
+  const handleRegister = () => {
+    if (email != '' && name != '' && password != '') {
+      api.signupUser({
+        email,
+        name,
+        password,
+        id: '123',
+        img: 'defaultImage',
+      });
+    }
+  };
 
   return (
     <View style={authScreen_styles.container}>
@@ -60,6 +73,7 @@ const RegisterScreen = () => {
               title={'Sign Up'}
               btnStyles={undefined}
               textStyles={undefined}
+              onPress={handleRegister}
             />
             <View style={authScreen_styles.linkContainer}>
               <Text style={authScreen_styles.simpleText}>
