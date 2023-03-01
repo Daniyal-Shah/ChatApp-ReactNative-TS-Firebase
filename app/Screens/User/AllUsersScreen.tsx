@@ -85,7 +85,7 @@ const AllUsersScreen = () => {
       });
       setFilteredItems(newData);
     } else {
-      setFilteredItems(filteredItems);
+      setFilteredItems(listData);
     }
   };
 

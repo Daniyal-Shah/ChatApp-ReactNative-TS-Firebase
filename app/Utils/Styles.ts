@@ -67,3 +67,23 @@ export const allUser_styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export const chat_styles = StyleSheet.create({
+  container: {
+    // position: 'relative',
+    flex: 1,
+    width: screenDimensions.width,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    // justifyContent: 'center',
+    padding: 0,
+  },
+  messageContainer: {
+    width: '100%',
+    paddingHorizontal: 5,
+  },
+  scroller: {
+    width: '100%',
+  },
+});

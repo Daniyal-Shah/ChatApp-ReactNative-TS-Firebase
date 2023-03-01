@@ -12,4 +12,14 @@ export const COLORS = {
 
   nonfocusInputTextColor: '#E5E5E5',
   focusInputTextColor: '#262626',
+
+  dividerColor: '#F5F5F5',
+  optionContainer: '#FAFAFA',
+
+  // Messages
+  otherMessageBg: '#F5F5F5',
+  otherMessageText: '#262626',
+
+  ownMessageBg: '#FFA925',
+  ownMessageText: '#FFFFFF',
 };
