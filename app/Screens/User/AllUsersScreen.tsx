@@ -1,10 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {allUser_styles} from '../../Utils/Styles';
 import SearchBar from '../../Components/User/SearchBar';
 import UserItem from '../../Components/User/UserItem';
+import {useNavigation} from '@react-navigation/native';
+import {
+  appStackNavigationType,
+  rootStackNavigationType,
+} from '../../Models/Navigation';
 
 const listData = [
   {
@@ -75,6 +80,7 @@ const listData = [
 const AllUsersScreen = () => {
   const [search, setSearch] = useState('');
   const [filteredItems, setFilteredItems] = useState(listData);
+  const appNavigation = useNavigation<appStackNavigationType>();
 
   const searchFilterFunction = (text: string) => {
     if (text) {
@@ -95,17 +101,33 @@ const AllUsersScreen = () => {
 
   return (
     <View style={allUser_styles.container}>
-      <SearchBar
-        icon={'md-search-outline'}
-        type={undefined}
-        value={search}
-        onChangeText={text => setSearch(text)}
-        styles={undefined}
-      />
+      <View style={{flexDirection: 'row', padding: 10, alignItems: 'center'}}>
+        <SearchBar
+          icon={'md-search-outline'}
+          type={undefined}
+          value={search}
+          onChangeText={text => setSearch(text)}
+          placeholder="Search user to chat"
+          styles={undefined}
+        />
+        <Image
+          source={{
+            uri: 'https://www.apetogentleman.com/wp-content/uploads/2018/06/male-models-marlon.jpg',
+          }}
+          style={allUser_styles.userImage}
+        />
+      </View>
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={allUser_styles.contentContainer}>
           {filteredItems.map(item => (
-            <UserItem avatar_url={item.avatar_url} name={item.name} />
+            <UserItem
+              avatar_url={item.avatar_url}
+              name={item.name}
+              onPress={() => {
+                appNavigation.navigate('ChatScreen');
+              }}
+            />
           ))}
         </View>
       </ScrollView>

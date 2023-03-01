@@ -14,7 +14,7 @@ export default function AppStack() {
         gestureDirection: 'horizontal',
         headerShown: false,
       }}
-      initialRouteName="ChatScreen">
+      initialRouteName="AllUserScreen">
       <Stack.Screen name="AllUserScreen" component={AllUsersScreen} />
       <Stack.Screen name="ChatScreen" component={ChatScreen} />
     </Stack.Navigator>

@@ -24,7 +24,6 @@ const SearchBar = ({
       borderRadius: 10,
       flexDirection: 'row',
       position: 'relative',
-      marginBottom: 15,
       marginTop: 10,
       ...styles,
     },

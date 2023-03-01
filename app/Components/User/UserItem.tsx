@@ -3,7 +3,8 @@ import {StyleSheet, Image, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../Utils/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-const UserItem = ({avatar_url, name}: any) => {
+
+const UserItem = ({avatar_url, name, onPress}: any) => {
   return (
     <View style={[styles.container, styles.shadow]}>
       <Image
@@ -14,7 +15,7 @@ const UserItem = ({avatar_url, name}: any) => {
       />
 
       <Text style={styles.name}>{name}</Text>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={onPress}>
         <Icon name="chat" size={28} color={COLORS.primaryColor} />
       </TouchableOpacity>
     </View>

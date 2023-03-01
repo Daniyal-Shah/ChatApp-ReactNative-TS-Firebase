@@ -1,29 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
-import {
-  Text,
-  View,
-  Button,
-  Dimensions,
-  TouchableOpacity,
-  StatusBar,
-  StyleSheet,
-  Image,
-} from 'react-native';
+import {Text, View, Image} from 'react-native';
 import React, {useState} from 'react';
 import {authScreen_styles} from '../../Utils/Styles';
 import CustomButton from '../../Components/Custom/CustomButton';
 import CustomInputField from '../../Components/Custom/CustomInputField';
 import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+
 import {authStackNavigationType} from '../../Models/Navigation';
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation<authStackNavigationType>();
 
-  const {navigate} = useNavigation<authStackNavigationType>();
   return (
     <View style={authScreen_styles.container}>
       <Image
@@ -75,7 +67,9 @@ const RegisterScreen = () => {
               </Text>
               <Text
                 style={authScreen_styles.link}
-                onPress={() => navigate('LoginScreen')}>
+                onPress={() => {
+                  navigation.navigate('LoginScreen');
+                }}>
                 {' '}
                 Login{' '}
               </Text>

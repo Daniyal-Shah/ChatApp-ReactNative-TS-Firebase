@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.optionContainer,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
     borderColor: COLORS.dividerColor,
     borderBottomWidth: 2,
     justifyContent: 'space-between',

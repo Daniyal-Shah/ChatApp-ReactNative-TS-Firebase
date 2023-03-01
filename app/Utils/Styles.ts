@@ -5,7 +5,7 @@ import {screenDimensions} from './Screen';
 export const authScreen_styles = StyleSheet.create({
   container: {position: 'relative', flex: 1, width: screenDimensions.width},
   bgImage: {
-    resizeMode: 'contain',
+    width: screenDimensions.width,
   },
   title: {
     fontSize: 35,
@@ -65,6 +65,13 @@ export const allUser_styles = StyleSheet.create({
 
   contentContainer: {
     alignItems: 'center',
+  },
+
+  userImage: {
+    width: 45,
+    height: 45,
+    borderRadius: 50,
+    marginHorizontal: 10,
   },
 });
 

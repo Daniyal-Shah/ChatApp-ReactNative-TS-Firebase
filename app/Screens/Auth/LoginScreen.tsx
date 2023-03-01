@@ -9,18 +9,16 @@ import CustomInputField from '../../Components/Custom/CustomInputField';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import {
-  appStackNavigationType,
   authStackNavigationType,
+  appStackNavigationType,
   rootStackNavigationType,
 } from '../../Models/Navigation';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const authStackNavigate = useNavigation<authStackNavigationType>();
-  const appStackNavigate = useNavigation<appStackNavigationType>();
-  const rootStackNavigate = useNavigation<rootStackNavigationType>();
+  const authNavigation = useNavigation<authStackNavigationType>();
+  const rootNavigation = useNavigation<rootStackNavigationType>();
 
   return (
     <View style={authScreen_styles.container}>
@@ -61,7 +59,7 @@ const LoginScreen = () => {
               btnStyles={undefined}
               textStyles={undefined}
               onPress={() => {
-                // rootStackNavigate.navigate('AppStack');
+                rootNavigation.navigate('AppStack' as never);
               }}
             />
             <View style={authScreen_styles.linkContainer}>
@@ -71,7 +69,7 @@ const LoginScreen = () => {
               <Text
                 style={authScreen_styles.link}
                 onPress={() => {
-                  authStackNavigate.navigate('RegisterScreen');
+                  authNavigation.navigate('RegisterScreen');
                 }}>
                 {' '}
                 Sign Up{' '}

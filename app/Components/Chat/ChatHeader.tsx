@@ -3,10 +3,15 @@ import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../Utils/Colors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {useNavigation} from '@react-navigation/native';
 const ChatHeader = ({avatar_url, name}: any) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.goBack();
+        }}>
         <View style={[styles.backContainer, styles.shadow]}>
           <Icon name="chevron-left" size={20} />
         </View>
@@ -30,10 +35,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 80,
     backgroundColor: COLORS.screenBackgroundColor,
-    // justifyContent: 'space-around',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
     borderColor: COLORS.dividerColor,
     borderBottomWidth: 2,
   },
