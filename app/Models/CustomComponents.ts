@@ -12,3 +12,8 @@ export interface CustomInputFieldProps extends TextInputProps {
   type: 'password' | undefined;
   styles: Object | undefined;
 }
+
+// Custom Loading Spinner
+export interface CustomLoadingSpinnerProps {
+  isLoading: boolean;
+}

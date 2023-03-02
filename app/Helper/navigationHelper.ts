@@ -1,11 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// import {createNavigationContainerRef} from '@react-navigation/native';
-// import {RootStackParamList} from '../Models/Navigation';
+import {createNavigationContainerRef} from '@react-navigation/native';
 
-// export const navigationRef = createNavigationContainerRef<RootStackParamList>();
+export const navigationRef = createNavigationContainerRef();
 
-// export function navigate(name: RootStackParamList) {
-//   if (navigationRef.isReady()) {
-//     navigationRef.navigate(name);
-//   }
-// }
+export function navigate(name: any) {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name as never);
+  }
+}

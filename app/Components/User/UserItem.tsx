@@ -4,15 +4,23 @@ import React from 'react';
 import {COLORS} from '../../Utils/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const getFirstLetters = (name: string) => {
+  let arr = name.split(' ');
+
+  let firstLetter = arr[0]?.charAt(0).toUpperCase();
+  let secondLetter = arr[1]?.charAt(0).toUpperCase()
+    ? arr[1]?.charAt(0).toUpperCase()
+    : '';
+
+  return firstLetter + '' + secondLetter;
+};
+
 const UserItem = ({avatar_url, name, onPress}: any) => {
   return (
     <View style={[styles.container, styles.shadow]}>
-      <Image
-        source={{
-          uri: avatar_url,
-        }}
-        style={styles.image}
-      />
+      <View style={styles.image}>
+        <Text style={styles.nameLetters}>{getFirstLetters(name)}</Text>
+      </View>
 
       <Text style={styles.name}>{name}</Text>
       <TouchableOpacity onPress={onPress}>
@@ -43,6 +51,14 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderColor: COLORS.primaryColor,
     borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'lightgray',
+  },
+  nameLetters: {
+    fontWeight: '600',
+    fontSize: 17,
+    color: 'black',
   },
   name: {
     fontSize: 15,

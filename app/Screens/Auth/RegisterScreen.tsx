@@ -66,7 +66,6 @@ const RegisterScreen = () => {
                   email,
                   name,
                   password,
-                  img: 'defaultImage',
                   id: uuid.v1().toString(),
                 });
                 setPassword('');

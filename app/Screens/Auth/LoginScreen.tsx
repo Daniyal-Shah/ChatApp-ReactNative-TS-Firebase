@@ -10,9 +10,9 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useNavigation} from '@react-navigation/native';
 import {
   authStackNavigationType,
-  appStackNavigationType,
   rootStackNavigationType,
 } from '../../Models/Navigation';
+import {handleLogin} from '../../Helper/handlers';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -59,7 +59,7 @@ const LoginScreen = () => {
               btnStyles={undefined}
               textStyles={undefined}
               onPress={() => {
-                rootNavigation.navigate('AppStack' as never);
+                handleLogin(email, password);
               }}
             />
             <View style={authScreen_styles.linkContainer}>
