@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import UserModal from './UserModel';
 
 export type AuthStackParamList = {
   LoginScreen: undefined;
@@ -8,7 +9,9 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AllUserScreen: undefined;
-  ChatScreen: undefined;
+  ChatScreen: {
+    user: UserModal;
+  };
 };
 
 export type RootStackParamList = {

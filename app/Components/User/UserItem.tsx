@@ -15,7 +15,7 @@ const getFirstLetters = (name: string) => {
   return firstLetter + '' + secondLetter;
 };
 
-const UserItem = ({avatar_url, name, onPress}: any) => {
+const UserItem = ({name, onPress}: any) => {
   return (
     <View style={[styles.container, styles.shadow]}>
       <View style={styles.image}>

@@ -25,6 +25,7 @@ const SearchBar = ({
       flexDirection: 'row',
       position: 'relative',
       marginTop: 10,
+
       ...styles,
     },
     icon: {
@@ -37,6 +38,7 @@ const SearchBar = ({
     input: {
       marginLeft: 50,
       width: '100%',
+      height: 50,
     },
     focusBorder: {
       borderWidth: 2,

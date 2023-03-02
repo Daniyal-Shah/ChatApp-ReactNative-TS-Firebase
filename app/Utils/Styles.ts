@@ -61,6 +61,14 @@ export const allUser_styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     // justifyContent: 'center',
+    marginBottom: 20,
+  },
+  innerContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+    height: 70,
+    marginBottom: 10,
   },
 
   contentContainer: {
@@ -72,6 +80,35 @@ export const allUser_styles = StyleSheet.create({
     height: 45,
     borderRadius: 50,
     marginHorizontal: 10,
+  },
+
+  messageContainer: {
+    padding: 10,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+
+    backgroundColor: 'white',
+    borderRadius: 30,
+    margin: 20,
+    // marginBottom: 0,
+  },
+  innerMessageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  wave: {width: 30, height: 30, marginHorizontal: 10},
+  message: {fontWeight: '400', color: 'black', fontSize: 16},
+  shadow: {
+    shadowOffset: {width: 2, height: 2},
+    shadowColor: 'black',
+    shadowOpacity: 0.4,
+    elevation: 7,
+    // background color must be set
+  },
+  hideMessage: {
+    display: 'none',
   },
 });
 

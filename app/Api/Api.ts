@@ -29,6 +29,16 @@ class API {
       .once('child_added')
       .then(snapshot => snapshot.val());
   }
+
+  async fetchAllUsers(): Promise<Array<UserModel>> {
+    return firebase
+      .app()
+      .database(this.endpoint)
+      .ref('/users/')
+      .orderByChild('email')
+      .once('value')
+      .then(snapshot => Object.values(snapshot.val()));
+  }
 }
 
 // Using ip of local system because backend api are running on local system
