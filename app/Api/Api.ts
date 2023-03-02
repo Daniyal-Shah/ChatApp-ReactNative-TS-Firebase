@@ -13,9 +13,8 @@ class API {
     firebase
       .app()
       .database(this.endpoint)
-      .ref('/users/123')
-      .set(payload)
-      .then(() => console.log('User created.'));
+      .ref(`/users/${payload.id}`)
+      .set(payload);
   }
 }
 
