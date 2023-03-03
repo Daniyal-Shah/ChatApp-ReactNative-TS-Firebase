@@ -2,17 +2,28 @@
 import {StyleSheet, TouchableOpacity, View, TextInput} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../Utils/Colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-const ChatFooter = () => {
+import Icon from 'react-native-vector-icons/Ionicons';
+import {screenDimensions} from '../../Utils/Screen';
+import UserModal from '../../Models/UserModel';
+import ChatListModel from '../../Models/ChatListModel';
+import {ChatFooter_Prop} from '../../Models/ComponentsProps';
+
+const ChatFooter = ({message, setMessage, handleMessage}: ChatFooter_Prop) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput placeholder="Type somthing.." multiline={true} />
+        <TextInput
+          placeholder="Type somthing.."
+          multiline={true}
+          value={message}
+          onChangeText={text => setMessage(text)}
+          style={{height: '100%'}}
+        />
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleMessage()}>
         <View style={styles.senderContainer}>
           <View style={[styles.backContainer, styles.shadow]}>
-            <Icon name="arrow-up-thick" size={30} color={COLORS.primaryColor} />
+            <Icon name="paper-plane" size={30} color={COLORS.primaryColor} />
           </View>
         </View>
       </TouchableOpacity>
@@ -25,7 +36,7 @@ export default ChatFooter;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 80,
+    height: screenDimensions.height / 11,
     backgroundColor: COLORS.optionContainer,
     flexDirection: 'row',
     alignItems: 'center',
@@ -33,12 +44,17 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   inputContainer: {
-    width: '80%',
+    width: screenDimensions.width / 1.3,
+    borderColor: COLORS.primaryColor,
+    borderWidth: 1,
+    borderRadius: 30,
+    paddingHorizontal: 5,
   },
   senderContainer: {
-    width: '20%',
+    // width: '20%',
   },
   image: {
     width: 60,

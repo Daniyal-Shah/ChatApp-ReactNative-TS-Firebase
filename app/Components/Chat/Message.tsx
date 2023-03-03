@@ -4,12 +4,15 @@ import React from 'react';
 import {COLORS} from '../../Utils/Colors';
 import {ChatMessage_Prop} from '../../Models/ComponentsProps';
 
-const Message = ({isMine, message}: ChatMessage_Prop) => {
+const Message = ({isMine, message, time}: ChatMessage_Prop) => {
   const styles = StyleSheet.create({
     container: {
       backgroundColor: isMine ? COLORS.ownMessageBg : COLORS.otherMessageBg,
-      width: '70%',
-      padding: 20,
+      // width: '70%',
+      minWidth: '30%',
+      maxWidth: '70%',
+      paddingHorizontal: 20,
+      paddingVertical: 5,
       borderRadius: 40,
       borderBottomRightRadius: isMine ? 0 : 40,
       borderBottomLeftRadius: isMine ? 40 : 0,
@@ -35,13 +38,8 @@ const Message = ({isMine, message}: ChatMessage_Prop) => {
 
   return (
     <View style={[styles.container, styles.shadow]}>
-      <Text style={styles.text}>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ad ea a at
-        aliquam sapiente quidem eum officiis repudiandae vitae consequatur,
-        libero eligendi nisi laboriosam blanditiis quam similique, odit nulla
-        ducimus.
-      </Text>
-      <Text style={styles.time}>12:30 AM</Text>
+      <Text style={styles.text}>{message}</Text>
+      <Text style={styles.time}>{time}</Text>
     </View>
   );
 };

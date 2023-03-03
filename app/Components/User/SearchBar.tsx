@@ -25,14 +25,16 @@ const SearchBar = ({
       flexDirection: 'row',
       position: 'relative',
       marginTop: 10,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
 
       ...styles,
     },
     icon: {
       position: 'absolute',
-      left: 20,
-      top: 20,
-      // top: '50%',
+
+      left: 10,
     },
 
     input: {

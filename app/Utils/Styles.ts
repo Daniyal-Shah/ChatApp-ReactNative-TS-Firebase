@@ -58,21 +58,22 @@ export const allUser_styles = StyleSheet.create({
     flex: 1,
     width: screenDimensions.width,
     padding: 8,
-    alignItems: 'center',
-    backgroundColor: 'white',
-    // justifyContent: 'center',
-    marginBottom: 20,
+    backgroundColor: COLORS.screenBackgroundColor,
   },
   innerContainer: {
     flexDirection: 'row',
-    padding: 10,
     alignItems: 'center',
-    height: 70,
-    marginBottom: 10,
+    justifyContent: 'center',
+    paddingBottom: 10,
   },
 
   contentContainer: {
+    width: '100%',
+    // height: screenDimensions.height / 2,
+    justifyContent: 'space-around',
     alignItems: 'center',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
 
   userImage: {
@@ -117,7 +118,7 @@ export const chat_styles = StyleSheet.create({
     // position: 'relative',
     flex: 1,
     width: screenDimensions.width,
-    paddingHorizontal: 8,
+    // paddingHorizontal: 8,
     alignItems: 'center',
     backgroundColor: 'white',
     // justifyContent: 'center',
@@ -128,6 +129,11 @@ export const chat_styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   scroller: {
+    width: '100%',
+  },
+  bgImage: {
+    flex: 1,
+    justifyContent: 'center',
     width: '100%',
   },
 });

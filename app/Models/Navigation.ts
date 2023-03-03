@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import ChatListModel from './ChatListModel';
 import UserModal from './UserModel';
 
 export type AuthStackParamList = {
@@ -11,6 +12,7 @@ export type AppStackParamList = {
   AllUserScreen: undefined;
   ChatScreen: {
     user: UserModal;
+    chatlist: ChatListModel;
   };
 };
 

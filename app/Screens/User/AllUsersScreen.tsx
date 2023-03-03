@@ -1,8 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {ScrollView, View, Image, Text, TouchableOpacity} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {allUser_styles} from '../../Utils/Styles';
+import {allUser_styles, chat_styles} from '../../Utils/Styles';
 import SearchBar from '../../Components/User/SearchBar';
 import UserItem from '../../Components/User/UserItem';
 import {useNavigation} from '@react-navigation/native';
@@ -10,6 +17,14 @@ import {appStackNavigationType} from '../../Models/Navigation';
 import UserModal from '../../Models/UserModel';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../Redux/store';
+import LogoutButton from '../../Components/User/LogoutButton';
+import {
+  handleClearMessages,
+  handleCreateChatList,
+  handleLogout,
+} from '../../Helper/handlers';
+import uuid from 'react-native-uuid';
+import ChatListModel from '../../Models/ChatListModel';
 
 const AllUsersScreen = () => {
   const [search, setSearch] = useState('');
@@ -34,10 +49,16 @@ const AllUsersScreen = () => {
 
   useEffect(() => {
     searchFilterFunction(search);
+    handleClearMessages();
   }, [search]);
 
   return (
     <View style={allUser_styles.container}>
+      {/* <ImageBackground
+        source={require('../../Assets/wallpaper3.png')}
+        resizeMode="cover"
+        style={chat_styles.bgImage}
+      /> */}
       <View style={allUser_styles.innerContainer}>
         <SearchBar
           icon={'md-search-outline'}
@@ -47,6 +68,9 @@ const AllUsersScreen = () => {
           placeholder="Search user to chat"
           styles={undefined}
         />
+        <TouchableOpacity onPress={handleLogout}>
+          <LogoutButton />
+        </TouchableOpacity>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -56,7 +80,7 @@ const AllUsersScreen = () => {
               name={item.name}
               key={item.id}
               onPress={() => {
-                appNavigation.navigate('ChatScreen', {user: item});
+                handleCreateChatList(currentUser, item);
               }}
             />
           ))}

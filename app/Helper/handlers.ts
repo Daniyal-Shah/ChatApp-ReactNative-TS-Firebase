@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {useDispatch} from 'react-redux';
 import {api} from '../Api/Api';
 import UserModal from '../Models/UserModel';
 import {Toast} from 'native-base';
@@ -8,7 +7,9 @@ import {loadingOn, loadingOff} from '../Redux/loading/loadingSlice';
 import store from '../Redux/store';
 import {navigate} from '../Helper/navigationHelper';
 import {loadUsers} from '../Redux/allUsers/allUserSlice';
-import {loginUser} from '../Redux/user/userSlice';
+import {loginUser, logoutUser} from '../Redux/user/userSlice';
+import ChatListModel from '../Models/ChatListModel';
+import {clearMessages} from '../Redux/messages/messagesSlice';
 
 export const handleRegister = async (payload: UserModal) => {
   try {
@@ -72,18 +73,106 @@ export const handleLogin = async (email: string, password: string) => {
   }
 };
 
+export const handleLogout = async () => {
+  try {
+    // Dispatch action to logout
+    store.dispatch(logoutUser());
+
+    // Navigating back to login
+    navigate('AuthStack');
+  } catch (error) {
+    Toast.show({
+      render: () => errorToast('Error Log Out.'),
+    });
+  }
+};
+
 export const handleFetchUsers = async () => {
   try {
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
 
     const users = await api.fetchAllUsers();
+    const filteredUsers = users.filter(
+      item => item.id !== store.getState().user.id,
+    );
 
     // Dispatch action to load all users
-    store.dispatch(loadUsers(users));
+    store.dispatch(loadUsers(filteredUsers));
 
     // Dispatch action to off the loading
     store.dispatch(loadingOff());
+  } catch (error) {
+    Toast.show({
+      render: () => errorToast('Error Logging In.'),
+    });
+  }
+};
+
+export const handleCreateChatList = async (
+  currentUser: any,
+  otherUser: any,
+) => {
+  try {
+    // Dispatch action to on the loading
+    store.dispatch(loadingOn());
+
+    const chatList = await api.createChatList(currentUser, otherUser);
+
+    navigate('ChatScreen', {
+      user: otherUser,
+      chatlist: chatList,
+    });
+
+    // Dispatch action to off the loading
+    store.dispatch(loadingOff());
+  } catch (error) {
+    Toast.show({
+      render: () => errorToast('Error Logging In.'),
+    });
+  }
+};
+
+export const handleSendMessage = async (
+  sender: ChatListModel,
+  reciever: ChatListModel,
+  message: String,
+  roomId: String,
+) => {
+  try {
+    // Dispatch action to on the loading
+    store.dispatch(loadingOn());
+
+    await api.sendMessage(sender, reciever, message, roomId);
+
+    // Dispatch action to off the loading
+    store.dispatch(loadingOff());
+  } catch (error) {
+    Toast.show({
+      render: () => errorToast('Error In Sending Message.'),
+    });
+  }
+};
+
+export const handleFetchMessages = async (roomId: string) => {
+  try {
+    // Dispatch action to on the loading
+    store.dispatch(loadingOn());
+
+    await api.fetchMessages(roomId);
+
+    // Dispatch action to off the loading
+    store.dispatch(loadingOff());
+  } catch (error) {
+    Toast.show({
+      render: () => errorToast('Error Logging In.'),
+    });
+  }
+};
+
+export const handleClearMessages = () => {
+  try {
+    store.dispatch(clearMessages());
   } catch (error) {
     Toast.show({
       render: () => errorToast('Error Logging In.'),

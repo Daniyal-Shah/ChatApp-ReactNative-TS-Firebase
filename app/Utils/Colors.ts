@@ -22,4 +22,6 @@ export const COLORS = {
 
   ownMessageBg: '#FFA925',
   ownMessageText: '#FFFFFF',
+
+  exitColor: 'red',
 };

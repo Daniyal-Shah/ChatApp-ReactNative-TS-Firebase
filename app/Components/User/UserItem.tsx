@@ -2,18 +2,9 @@
 import {StyleSheet, Image, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../Utils/Colors';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-const getFirstLetters = (name: string) => {
-  let arr = name.split(' ');
-
-  let firstLetter = arr[0]?.charAt(0).toUpperCase();
-  let secondLetter = arr[1]?.charAt(0).toUpperCase()
-    ? arr[1]?.charAt(0).toUpperCase()
-    : '';
-
-  return firstLetter + '' + secondLetter;
-};
+import Icon from 'react-native-vector-icons/AntDesign';
+import {screenDimensions} from '../../Utils/Screen';
+import {getFirstLetters} from '../../Helper/filter';
 
 const UserItem = ({name, onPress}: any) => {
   return (
@@ -24,7 +15,7 @@ const UserItem = ({name, onPress}: any) => {
 
       <Text style={styles.name}>{name}</Text>
       <TouchableOpacity onPress={onPress}>
-        <Icon name="chat" size={28} color={COLORS.primaryColor} />
+        <Icon name="wechat" size={32} color={COLORS.primaryColor} />
       </TouchableOpacity>
     </View>
   );
@@ -34,14 +25,14 @@ export default UserItem;
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
-    height: 80,
+    width: screenDimensions.width / 2.5,
+    height: screenDimensions.height / 4,
     backgroundColor: COLORS.secondaryColor,
     borderRadius: 10,
     marginVertical: 4,
     padding: 10,
     justifyContent: 'space-around',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
     marginBottom: 20,
   },
@@ -59,17 +50,19 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 17,
     color: 'black',
+    alignItems: 'center',
   },
   name: {
     fontSize: 15,
     fontWeight: '500',
     color: COLORS.primaryTextColor,
+    textAlign: 'center',
   },
   shadow: {
     shadowOffset: {width: 2, height: 2},
     shadowColor: 'black',
-    shadowOpacity: 0.4,
-    elevation: 7,
+    shadowOpacity: 0.6,
+    elevation: 20,
     // background color must be set
   },
 });
