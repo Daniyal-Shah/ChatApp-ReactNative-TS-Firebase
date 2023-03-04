@@ -7,6 +7,7 @@ import MessageModel from '../Models/MessageModel';
 import moment from 'moment';
 import store from '../Redux/store';
 import {loadMessages} from '../Redux/messages/messagesSlice';
+import {sortByDate} from '../Helper/filter';
 
 class API {
   endpoint: string;
@@ -153,7 +154,9 @@ class API {
       .ref('/messages/' + roomId)
       .on('value', snapshot => {
         if (snapshot?.val()) {
-          store.dispatch(loadMessages(Object.values(snapshot.val())));
+          store.dispatch(
+            loadMessages(sortByDate(Object.values(snapshot.val()))),
+          );
         }
       });
   }
