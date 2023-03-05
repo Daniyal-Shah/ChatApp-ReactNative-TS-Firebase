@@ -23,9 +23,8 @@ import {
   handleCreateChatList,
   handleLogout,
 } from '../../Helper/handlers';
-import uuid from 'react-native-uuid';
-import ChatListModel from '../../Models/ChatListModel';
 
+import {useFocusEffect} from '@react-navigation/native';
 const AllUsersScreen = () => {
   const [search, setSearch] = useState('');
   const allUsers = useSelector((state: RootState) => state.allUser);
@@ -47,11 +46,12 @@ const AllUsersScreen = () => {
     }
   };
 
-  useEffect(() => {
-    searchFilterFunction(search);
-    handleClearMessages();
-  }, [search]);
-
+  useFocusEffect(
+    React.useCallback(() => {
+      searchFilterFunction(search);
+      handleClearMessages();
+    }, [search]),
+  );
   return (
     <View style={allUser_styles.container}>
       {/* <ImageBackground

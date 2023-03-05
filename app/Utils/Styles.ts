@@ -132,8 +132,13 @@ export const chat_styles = StyleSheet.create({
     width: '100%',
   },
   bgImage: {
-    flex: 1,
-    justifyContent: 'center',
-    width: '100%',
+    // flex: 1,
+    // justifyContent: 'center',
+    // width: '100%',
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   },
 });

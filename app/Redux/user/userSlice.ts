@@ -14,7 +14,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser(state: UserModal, action: PayloadAction<UserModal>) {
-      console.log(action);
       return {...action.payload};
     },
     logoutUser(state: UserModal) {

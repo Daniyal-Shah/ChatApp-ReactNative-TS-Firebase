@@ -156,10 +156,28 @@ export const handleSendMessage = async (
 
 export const handleFetchMessages = async (roomId: string) => {
   try {
+    console.log('Fetching all messages ...');
+    // Dispatch action to on the loading
+    // store.dispatch(loadingOn());
+
+    await api.fetchMessages(roomId);
+
+    // Dispatch action to off the loading
+    // store.dispatch(loadingOff());
+  } catch (error) {
+    Toast.show({
+      render: () => errorToast('Error Logging In.'),
+    });
+  }
+};
+
+export const handleUpdateMessages = async (roomId: string) => {
+  try {
+    console.log('Updating messages ...');
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
 
-    await api.fetchMessages(roomId);
+    await api.updateMessage(roomId);
 
     // Dispatch action to off the loading
     store.dispatch(loadingOff());
@@ -169,7 +187,6 @@ export const handleFetchMessages = async (roomId: string) => {
     });
   }
 };
-
 export const handleClearMessages = () => {
   try {
     store.dispatch(clearMessages());

@@ -14,12 +14,18 @@ export const messagesSlice = createSlice({
     ) {
       return action.payload;
     },
+    addMessage(
+      state: Array<MessageModel>,
+      action: PayloadAction<MessageModel>,
+    ) {
+      return [...state, action.payload];
+    },
     clearMessages(state: Array<MessageModel>) {
       return initialState;
     },
   },
 });
 
-export const {loadMessages, clearMessages} = messagesSlice.actions;
+export const {loadMessages, clearMessages, addMessage} = messagesSlice.actions;
 
 export default messagesSlice.reducer;

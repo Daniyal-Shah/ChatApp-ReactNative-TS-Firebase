@@ -1,12 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {View, ScrollView, ImageBackground, Image} from 'react-native';
+import {
+  View,
+  ScrollView,
+  ImageBackground,
+  Image,
+  KeyboardAvoidingView,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {chat_styles} from '../../Utils/Styles';
 import ChatHeader from '../../Components/Chat/ChatHeader';
 import ChatFooter from '../../Components/Chat/ChatFooter';
 import Message from '../../Components/Chat/Message';
-import {handleFetchMessages, handleSendMessage} from '../../Helper/handlers';
+import {
+  handleFetchMessages,
+  handleSendMessage,
+  handleUpdateMessages,
+} from '../../Helper/handlers';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../Redux/store';
 import ChatListModel from '../../Models/ChatListModel';
@@ -30,17 +40,19 @@ const SingleChatScreen = ({route}: any) => {
     if (message && message !== '') {
       await handleSendMessage(userChatList, chatlist, message, chatlist.roomId);
       setMessage('');
+      // handleUpdateMessages(chatlist.roomId);
       handleFetchMessages(chatlist.roomId);
     }
   }
 
-  useFocusEffect(
-    React.useCallback(() => {
-      handleFetchMessages(chatlist.roomId);
-    }, []),
-  );
+  useEffect(() => {
+    // handleUpdateMessages(chatlist.roomId);
+    handleFetchMessages(chatlist.roomId);
+  }, []);
+
   return (
     <View style={chat_styles.container}>
+      {/* <KeyboardAvoidingView> */}
       <ImageBackground
         source={require('../../Assets/wallpaper3.png')}
         resizeMode="cover"
@@ -65,6 +77,7 @@ const SingleChatScreen = ({route}: any) => {
           handleMessage={handleMessage}
         />
       </ImageBackground>
+      {/* </KeyboardAvoidingView> */}
     </View>
   );
 };

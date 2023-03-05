@@ -1,51 +1,45 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import UserModel from '../Models/UserModel';
-import database, {firebase} from '@react-native-firebase/database';
+import {firebase} from '@react-native-firebase/database';
 import uuid from 'react-native-uuid';
 import ChatListModel from '../Models/ChatListModel';
 import MessageModel from '../Models/MessageModel';
 import moment from 'moment';
 import store from '../Redux/store';
-import {loadMessages} from '../Redux/messages/messagesSlice';
+import {addMessage, loadMessages} from '../Redux/messages/messagesSlice';
 import {sortByDate} from '../Helper/filter';
 
 class API {
   endpoint: string;
+  reference: any;
 
   constructor(url: string) {
     this.endpoint = url;
+    this.reference = firebase.app().database(this.endpoint);
   }
 
   // SignUp Method
   async signupUser(payload: UserModel): Promise<void> {
-    return firebase
-      .app()
-      .database(this.endpoint)
-      .ref(`/users/${payload.id}`)
-      .set(payload);
+    return this.reference.ref(`/users/${payload.id}`).set(payload);
   }
 
   // Login Method
   async loginUser(email: string): Promise<UserModel> {
-    return firebase
-      .app()
-      .database(this.endpoint)
+    return this.reference
       .ref('/users/')
       .orderByChild('email')
       .equalTo(email)
       .once('child_added')
-      .then(snapshot => snapshot.val());
+      .then((snapshot: any) => snapshot.val());
   }
 
   // Fetch All Users Method
   async fetchAllUsers(): Promise<Array<UserModel>> {
-    return firebase
-      .app()
-      .database(this.endpoint)
+    return this.reference
       .ref('/users/')
       .orderByChild('name')
       .once('value')
-      .then(snapshot => Object.values(snapshot.val()));
+      .then((snapshot: any) => Object.values(snapshot.val()));
   }
 
   async createChatList(
@@ -108,14 +102,8 @@ class API {
     roomId: String,
   ): Promise<void> {
     // Getting reference for message
-    const newReference = firebase
-      .app()
-      .database(this.endpoint)
-      .ref('/messages/' + roomId)
-      .push();
-    // console.log('SENDER : ', sender);
-    // console.log('RECIEVER : ', reciever);
-    // console.log('ROOM ID : ', roomId);
+    const newReference = this.reference.ref('/messages/' + roomId).push();
+
     const messageData: MessageModel = {
       roomId: roomId,
       message: message,
@@ -133,14 +121,10 @@ class API {
       };
 
       return Promise.all([
-        firebase
-          .app()
-          .database(this.endpoint)
+        this.reference
           .ref('/chatlist/' + reciever?.id + '/' + sender?.id)
           .update(chatListupdate),
-        firebase
-          .app()
-          .database(this.endpoint)
+        this.reference
           .ref('/chatlist/' + sender?.id + '/' + reciever?.id)
           .update(chatListupdate),
       ]);
@@ -148,15 +132,23 @@ class API {
   }
 
   async fetchMessages(roomId: string) {
-    return firebase
-      .app()
-      .database(this.endpoint)
+    return this.reference
       .ref('/messages/' + roomId)
-      .on('value', snapshot => {
+      .once('value', (snapshot: any) => {
         if (snapshot?.val()) {
           store.dispatch(
             loadMessages(sortByDate(Object.values(snapshot.val()))),
           );
+        }
+      });
+  }
+
+  async updateMessage(roomId: string) {
+    return this.reference
+      .ref('/messages/' + roomId)
+      .on('child_added', (snapshot: any) => {
+        if (snapshot?.val()) {
+          store.dispatch(addMessage(snapshot.val()));
         }
       });
   }
