@@ -4,4 +4,6 @@ export default interface ChatListModel {
   email: String;
   roomId: String;
   lastMsg: String;
+  sendTime: String | undefined;
+  unseenMessages: number;
 }

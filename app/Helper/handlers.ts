@@ -51,6 +51,9 @@ export const handleLogin = async (email: string, password: string) => {
     if (user?.password === password) {
       // Dispatch action to current user data
       await store.dispatch(loginUser(user));
+
+      //Fetching All ChatList
+      await handleFetchChatLists();
       //Fetching All Users
       await handleFetchUsers();
 
@@ -104,7 +107,23 @@ export const handleFetchUsers = async () => {
     store.dispatch(loadingOff());
   } catch (error) {
     Toast.show({
-      render: () => errorToast('Error Logging In.'),
+      render: () => errorToast('Error Fetching Users.'),
+    });
+  }
+};
+
+export const handleFetchChatLists = async () => {
+  try {
+    // Dispatch action to on the loading
+    store.dispatch(loadingOn());
+
+    await api.fetchChatList(store.getState().user.id);
+
+    // Dispatch action to off the loading
+    store.dispatch(loadingOff());
+  } catch (error) {
+    Toast.show({
+      render: () => errorToast('Error In Fetching ChatList.'),
     });
   }
 };
@@ -117,20 +136,17 @@ export const handleCreateChatList = async (
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
 
-    const chatList = await api.createChatList(currentUser, otherUser);
-
-    navigate('ChatScreen', {
-      user: otherUser,
-      chatlist: chatList,
-    });
+    await api.createChatList(currentUser, otherUser);
 
     // Dispatch action to off the loading
     store.dispatch(loadingOff());
   } catch (error) {
     Toast.show({
-      render: () => errorToast('Error Logging In.'),
+      render: () => errorToast('Error In Creating Chatlist.'),
     });
   }
+
+  await handleFetchChatLists();
 };
 
 export const handleSendMessage = async (
@@ -138,12 +154,13 @@ export const handleSendMessage = async (
   reciever: ChatListModel,
   message: String,
   roomId: String,
+  unseenMessages: number,
 ) => {
   try {
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
 
-    await api.sendMessage(sender, reciever, message, roomId);
+    await api.sendMessage(sender, reciever, message, roomId, unseenMessages);
 
     // Dispatch action to off the loading
     store.dispatch(loadingOff());
@@ -156,7 +173,6 @@ export const handleSendMessage = async (
 
 export const handleFetchMessages = async (roomId: string) => {
   try {
-    console.log('Fetching all messages ...');
     // Dispatch action to on the loading
     // store.dispatch(loadingOn());
 
@@ -173,7 +189,6 @@ export const handleFetchMessages = async (roomId: string) => {
 
 export const handleUpdateMessages = async (roomId: string) => {
   try {
-    console.log('Updating messages ...');
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
 
@@ -183,16 +198,17 @@ export const handleUpdateMessages = async (roomId: string) => {
     store.dispatch(loadingOff());
   } catch (error) {
     Toast.show({
-      render: () => errorToast('Error Logging In.'),
+      render: () => errorToast('Error In Updating Messages.'),
     });
   }
 };
+
 export const handleClearMessages = () => {
   try {
     store.dispatch(clearMessages());
   } catch (error) {
     Toast.show({
-      render: () => errorToast('Error Logging In.'),
+      render: () => errorToast('Error In Clearing Messages.'),
     });
   }
 };

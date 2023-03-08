@@ -8,6 +8,8 @@ import moment from 'moment';
 import store from '../Redux/store';
 import {addMessage, loadMessages} from '../Redux/messages/messagesSlice';
 import {sortByDate} from '../Helper/filter';
+import {loadChat, updateChat} from '../Redux/allchats/allChatSlice';
+import ChatUpdateModel from '../Models/ChatUpdateModel';
 
 class API {
   endpoint: string;
@@ -58,15 +60,19 @@ class API {
             id: currentUser.id,
             name: currentUser.name,
             email: currentUser.email,
-            lastMsg: 'Hello i am using Dchat ',
+            lastMsg: '',
             roomId,
+            sendTime: undefined,
+            unseenMessages: 0,
           };
           const otherUserData: ChatListModel = {
             id: otherUser.id,
             name: otherUser.name,
             email: otherUser.email,
-            lastMsg: 'Hello i am using Dchat ',
+            lastMsg: '',
             roomId,
+            sendTime: undefined,
+            unseenMessages: 0,
           };
 
           firebase
@@ -87,10 +93,22 @@ class API {
             id: otherUser.id,
             name: otherUser.name,
             email: otherUser.email,
-            lastMsg: 'Hello i am using Dchat ',
+            lastMsg: '',
             roomId: snapshot.val().roomId,
+            sendTime: undefined,
+            unseenMessages: 0,
           };
           return otherUserData;
+        }
+      });
+  }
+
+  async fetchChatList(userId: String): Promise<Array<ChatListModel>> {
+    return this.reference
+      .ref('/chatlist/' + userId + '/')
+      .once('value', (snapshot: any) => {
+        if (snapshot?.val()) {
+          store.dispatch(loadChat(Object.values(snapshot.val())));
         }
       });
   }
@@ -100,6 +118,7 @@ class API {
     reciever: ChatListModel,
     message: String,
     roomId: String,
+    unseenMessages: number,
   ): Promise<void> {
     // Getting reference for message
     const newReference = this.reference.ref('/messages/' + roomId).push();
@@ -118,6 +137,7 @@ class API {
       let chatListupdate = {
         lastMsg: message,
         sendTime: messageData.sendTime,
+        unseenMessages: unseenMessages + 1,
       };
 
       return Promise.all([
@@ -127,6 +147,9 @@ class API {
         this.reference
           .ref('/chatlist/' + sender?.id + '/' + reciever?.id)
           .update(chatListupdate),
+
+        //Updating chatlist state to show updated last message and date
+        store.dispatch(updateChat({...chatListupdate, id: reciever.id})),
       ]);
     });
   }
@@ -134,10 +157,10 @@ class API {
   async fetchMessages(roomId: string) {
     return this.reference
       .ref('/messages/' + roomId)
-      .once('value', (snapshot: any) => {
+      .on('value', (snapshot: any) => {
         if (snapshot?.val()) {
           store.dispatch(
-            loadMessages(sortByDate(Object.values(snapshot.val()))),
+            loadMessages(sortByDate(Object.values(snapshot.val()), 'ASC')),
           );
         }
       });

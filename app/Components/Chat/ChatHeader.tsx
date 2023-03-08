@@ -7,21 +7,14 @@ import {useNavigation} from '@react-navigation/native';
 import {getFirstLetters} from '../../Helper/filter';
 import {screenDimensions} from '../../Utils/Screen';
 import {handleClearMessages} from '../../Helper/handlers';
+import BackButton from '../Custom/BackButton';
 
 const ChatHeader = ({avatar_url, name}: any) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          handleClearMessages();
-          navigation.goBack();
-        }}>
-        <View style={[styles.backContainer, styles.shadow]}>
-          <Icon name="chevron-left" size={20} />
-        </View>
-      </TouchableOpacity>
+      <BackButton />
       <View>
         <View style={styles.image}>
           <Text style={styles.nameLetters}>{getFirstLetters(name)}</Text>

@@ -82,12 +82,22 @@ export const allUser_styles = StyleSheet.create({
     borderRadius: 50,
     marginHorizontal: 10,
   },
+  allUsersContainer: {
+    padding: 20,
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: 'white',
+    borderRadius: 30,
+    margin: 20,
+    // width: 70,
+  },
 
   messageContainer: {
     padding: 10,
     position: 'absolute',
     bottom: 0,
-    right: 0,
+    left: 0,
 
     backgroundColor: 'white',
     borderRadius: 30,

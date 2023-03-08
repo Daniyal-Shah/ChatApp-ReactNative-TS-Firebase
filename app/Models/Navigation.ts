@@ -10,6 +10,7 @@ export type AuthStackParamList = {
 
 export type AppStackParamList = {
   AllUserScreen: undefined;
+  AllChatScreen: undefined;
   ChatScreen: {
     user: UserModal;
     chatlist: ChatListModel;

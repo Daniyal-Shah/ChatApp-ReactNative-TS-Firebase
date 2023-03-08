@@ -18,7 +18,6 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const authNavigation = useNavigation<authStackNavigationType>();
-  const rootNavigation = useNavigation<rootStackNavigationType>();
 
   return (
     <View style={authScreen_styles.container}>

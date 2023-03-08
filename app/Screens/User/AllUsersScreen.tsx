@@ -1,37 +1,29 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  ScrollView,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {allUser_styles, chat_styles} from '../../Utils/Styles';
 import SearchBar from '../../Components/User/SearchBar';
-import UserItem from '../../Components/User/UserItem';
-import {useNavigation} from '@react-navigation/native';
-import {appStackNavigationType} from '../../Models/Navigation';
 import UserModal from '../../Models/UserModel';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../Redux/store';
 import LogoutButton from '../../Components/User/LogoutButton';
 import {
-  handleClearMessages,
   handleCreateChatList,
+  handleFetchUsers,
   handleLogout,
 } from '../../Helper/handlers';
-
 import {useFocusEffect} from '@react-navigation/native';
+import AvailableUser from '../../Components/User/AvailableUser';
+import EmptyMessage from '../../Components/Custom/EmptyMessage';
+import BackButton from '../../Components/Custom/BackButton';
+
 const AllUsersScreen = () => {
   const [search, setSearch] = useState('');
   const allUsers = useSelector((state: RootState) => state.allUser);
   const currentUser = useSelector((state: RootState) => state.user);
   const [filteredItems, setFilteredItems] = useState(allUsers);
-  const appNavigation = useNavigation<appStackNavigationType>();
-  const [message, setMessage] = useState(true);
 
   const searchFilterFunction = (text: string) => {
     if (text) {
@@ -49,34 +41,30 @@ const AllUsersScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       searchFilterFunction(search);
-      handleClearMessages();
+      handleFetchUsers();
     }, [search]),
   );
   return (
     <View style={allUser_styles.container}>
-      {/* <ImageBackground
-        source={require('../../Assets/wallpaper3.png')}
-        resizeMode="cover"
-        style={chat_styles.bgImage}
-      /> */}
       <View style={allUser_styles.innerContainer}>
+        <BackButton />
         <SearchBar
           icon={'md-search-outline'}
           type={undefined}
           value={search}
           onChangeText={text => setSearch(text)}
           placeholder="Search user to chat"
-          styles={undefined}
+          styles={{marginLeft: 5}}
         />
-        <TouchableOpacity onPress={handleLogout}>
+        {/* <TouchableOpacity onPress={handleLogout}>
           <LogoutButton />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={allUser_styles.contentContainer}>
           {filteredItems.map(item => (
-            <UserItem
+            <AvailableUser
               name={item.name}
               key={item.id}
               onPress={() => {
@@ -86,23 +74,7 @@ const AllUsersScreen = () => {
           ))}
         </View>
       </ScrollView>
-      <TouchableOpacity
-        onPress={() => setMessage(!message)}
-        style={[allUser_styles.messageContainer, allUser_styles.shadow]}>
-        <View style={allUser_styles.innerMessageContainer}>
-          <Image
-            source={require('../../Assets/wave.png')}
-            style={allUser_styles.wave}
-          />
-          <Text
-            style={[
-              allUser_styles.message,
-              message ? {} : allUser_styles.hideMessage,
-            ]}>
-            Hello, {currentUser.name}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      {filteredItems.length < 1 && <EmptyMessage message={'No User Found'} />}
     </View>
   );
 };
