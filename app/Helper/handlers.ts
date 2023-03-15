@@ -10,24 +10,37 @@ import {loadUsers} from '../Redux/allUsers/allUserSlice';
 import {loginUser, logoutUser} from '../Redux/user/userSlice';
 import ChatListModel from '../Models/ChatListModel';
 import {clearMessages} from '../Redux/messages/messagesSlice';
+import {setAsyncData} from './asyncHelpers';
 
 export const handleRegister = async (payload: UserModal) => {
   try {
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
 
-    // Api hitting for sinup
-    await api.signupUser(payload);
+    let alreadyExists = await api.getUser(payload.email);
 
-    // Dispatch action to off the loading
-    store.dispatch(loadingOff());
+    if (!alreadyExists) {
+      // Api hitting for sinup
+      await api.signupUser(payload);
 
-    Toast.show({
-      render: () => successToast('Successfully Added User, Now Login'),
-    });
+      // Dispatch action to off the loading
+      store.dispatch(loadingOff());
 
-    // Navigate to Login Screen
-    navigate('LoginScreen');
+      Toast.show({
+        render: () => successToast('Successfully Added User, Now Login'),
+      });
+
+      // Navigate to Login Screen
+      navigate('LoginScreen');
+    } else {
+      // Dispatch action to off the loading
+      store.dispatch(loadingOff());
+
+      Toast.show({
+        render: () =>
+          errorToast('Try with different emai. Email already exists'),
+      });
+    }
   } catch (error) {
     Toast.show({
       render: () => errorToast('Error In Adding User'),
@@ -35,7 +48,11 @@ export const handleRegister = async (payload: UserModal) => {
   }
 };
 
-export const handleLogin = async (email: string, password: string) => {
+export const handleLogin = async (
+  email: string,
+  password: string,
+  rememberme: boolean,
+) => {
   try {
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
@@ -56,6 +73,10 @@ export const handleLogin = async (email: string, password: string) => {
       await handleFetchChatLists();
       //Fetching All Users
       await handleFetchUsers();
+
+      if (rememberme) {
+        setAsyncData({email: email, password: password}, 'login_credentials');
+      }
 
       Toast.show({
         render: () => successToast('Successfully Logged In.'),

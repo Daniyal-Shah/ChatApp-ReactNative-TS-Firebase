@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import {View, ScrollView, ImageBackground} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import {View, ScrollView, ImageBackground, ScrollViewProps} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
 import {chat_styles} from '../../Utils/Styles';
 import ChatHeader from '../../Components/Chat/ChatHeader';
 import ChatFooter from '../../Components/Chat/ChatFooter';
@@ -15,6 +15,7 @@ import {getTime} from '../../Helper/filter';
 
 const SingleChatScreen = ({route}: any) => {
   const {user, chatlist} = route.params;
+  const scrollViewRef = React.useRef<ScrollView>();
   const [message, setMessage] = useState('');
   const currentUser = useSelector((state: RootState) => state.user);
   const chat = useSelector((state: RootState) => state.messages);

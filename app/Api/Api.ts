@@ -35,6 +35,16 @@ class API {
       .then((snapshot: any) => snapshot.val());
   }
 
+  // Get user method
+  async getUser(email: String): Promise<UserModel> {
+    return this.reference
+      .ref('/users/')
+      .orderByChild('email')
+      .equalTo(email)
+      .once('value')
+      .then((snapshot: any) => Object.values(snapshot.val()));
+  }
+
   // Fetch All Users Method
   async fetchAllUsers(): Promise<Array<UserModel>> {
     return this.reference
@@ -44,6 +54,7 @@ class API {
       .then((snapshot: any) => Object.values(snapshot.val()));
   }
 
+  // Create Chatlist Method
   async createChatList(
     currentUser: any,
     otherUser: any,
@@ -103,6 +114,7 @@ class API {
       });
   }
 
+  // Fetch ChatLists Method
   async fetchChatList(userId: String): Promise<Array<ChatListModel>> {
     return this.reference
       .ref('/chatlist/' + userId + '/')
@@ -113,6 +125,7 @@ class API {
       });
   }
 
+  // Send Message Method
   async sendMessage(
     sender: ChatListModel,
     reciever: ChatListModel,
@@ -154,6 +167,7 @@ class API {
     });
   }
 
+  // Fetch Messages Method
   async fetchMessages(roomId: string) {
     return this.reference
       .ref('/messages/' + roomId)
@@ -166,6 +180,7 @@ class API {
       });
   }
 
+  // Update Messages Method
   async updateMessage(roomId: string) {
     return this.reference
       .ref('/messages/' + roomId)

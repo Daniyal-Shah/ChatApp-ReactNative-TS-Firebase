@@ -55,10 +55,8 @@ const AllUsersScreen = () => {
           onChangeText={text => setSearch(text)}
           placeholder="Search user to chat"
           styles={{marginLeft: 5}}
+          error={false}
         />
-        {/* <TouchableOpacity onPress={handleLogout}>
-          <LogoutButton />
-        </TouchableOpacity> */}
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -72,9 +70,11 @@ const AllUsersScreen = () => {
               }}
             />
           ))}
+          {filteredItems.length < 1 && (
+            <EmptyMessage message={'No User Found'} />
+          )}
         </View>
       </ScrollView>
-      {filteredItems.length < 1 && <EmptyMessage message={'No User Found'} />}
     </View>
   );
 };

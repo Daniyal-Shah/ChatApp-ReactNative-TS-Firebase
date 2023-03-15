@@ -24,4 +24,6 @@ export const COLORS = {
   ownMessageText: '#FFFFFF',
 
   exitColor: 'red',
+
+  errorColor: '#ea2c2c',
 };

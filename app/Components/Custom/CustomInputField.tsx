@@ -13,9 +13,10 @@ const CustomInputField = ({
   onChangeText,
   type,
   styles,
+  error,
 }: CustomInputFieldProps) => {
   const [focus, setFocus] = useState(false);
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(type === 'password' ? true : false);
 
   const defaultStyles = StyleSheet.create({
     container: {
@@ -48,13 +49,21 @@ const CustomInputField = ({
       borderWidth: 2,
       borderColor: COLORS.primaryColor,
     },
+    errorBorder: {
+      borderWidth: 2,
+      borderColor: COLORS.errorColor,
+    },
   });
 
   return (
     <View
       style={[
         defaultStyles.container,
-        focus ? defaultStyles.focusBorder : null,
+        focus
+          ? error
+            ? defaultStyles.errorBorder
+            : defaultStyles.focusBorder
+          : null,
       ]}>
       <Icon style={defaultStyles.icon} name={icon} size={20} />
       <TextInput
@@ -73,6 +82,7 @@ const CustomInputField = ({
         value={value}
         onChangeText={onChangeText}
       />
+
       {type === 'password' && (
         <Icon
           style={defaultStyles.iconPassword}

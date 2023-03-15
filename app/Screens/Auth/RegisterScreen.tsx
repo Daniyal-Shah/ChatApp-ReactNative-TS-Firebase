@@ -10,11 +10,11 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {authStackNavigationType} from '../../Models/Navigation';
 import {handleRegister} from '../../Helper/handlers';
 import uuid from 'react-native-uuid';
+import ErrorMessage from '../../Components/Custom/ErrorMessage';
+import {Formik} from 'formik';
+import {signUpValidationSchema} from '../../Models/yup.models';
 
 const RegisterScreen = () => {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
   const navigation = useNavigation<authStackNavigationType>();
 
   return (
@@ -30,63 +30,83 @@ const RegisterScreen = () => {
           <View style={authScreen_styles.topContainer}>
             <Text style={authScreen_styles.title}>Sign Up</Text>
           </View>
-          <View style={authScreen_styles.middleContainer}>
-            <CustomInputField
-              icon="human-male"
-              placeholder="Name"
-              value={name}
-              onChangeText={text => setName(text)}
-              type={undefined}
-              styles={authScreen_styles.emailInput}
-            />
-            <CustomInputField
-              icon="email"
-              placeholder="Email"
-              value={email}
-              onChangeText={text => setEmail(text)}
-              type={undefined}
-              styles={authScreen_styles.emailInput}
-            />
-            <CustomInputField
-              icon="lock"
-              placeholder="Password"
-              value={password}
-              onChangeText={text => setPassword(text)}
-              type={'password'}
-              styles={undefined}
-            />
-          </View>
-          <View style={authScreen_styles.bottomContainer}>
-            <CustomButton
-              title={'Sign Up'}
-              btnStyles={undefined}
-              textStyles={undefined}
-              onPress={() => {
-                handleRegister({
-                  email,
-                  name,
-                  password,
-                  id: uuid.v1().toString(),
-                });
-                setPassword('');
-                setName('');
-                setEmail('');
-              }}
-            />
-            <View style={authScreen_styles.linkContainer}>
-              <Text style={authScreen_styles.simpleText}>
-                Already have an account ?{' '}
-              </Text>
-              <Text
-                style={authScreen_styles.link}
-                onPress={() => {
-                  navigation.navigate('LoginScreen');
-                }}>
-                {' '}
-                Login{' '}
-              </Text>
-            </View>
-          </View>
+          <Formik
+            validationSchema={signUpValidationSchema}
+            initialValues={{
+              name: '',
+              email: '',
+              password: '',
+            }}
+            onSubmit={values => {
+              handleRegister({
+                ...values,
+                id: uuid.v1().toString(),
+              });
+            }}>
+            {({values, handleChange, errors, touched, handleSubmit}) => (
+              <>
+                <View style={authScreen_styles.middleContainer}>
+                  <CustomInputField
+                    icon="human-male"
+                    placeholder="Name"
+                    value={values.name}
+                    onChangeText={handleChange('name')}
+                    type={undefined}
+                    styles={authScreen_styles.emailInput}
+                    error={false}
+                  />
+                  {touched.name && errors.name && (
+                    <ErrorMessage message={errors.name} />
+                  )}
+                  <CustomInputField
+                    icon="email"
+                    placeholder="Email"
+                    value={values.email}
+                    onChangeText={handleChange('email')}
+                    type={undefined}
+                    styles={authScreen_styles.emailInput}
+                    error={false}
+                  />
+                  {touched.email && errors.email && (
+                    <ErrorMessage message={errors.email} />
+                  )}
+                  <CustomInputField
+                    icon="lock"
+                    placeholder="Password"
+                    value={values.password}
+                    onChangeText={handleChange('password')}
+                    type={'password'}
+                    styles={undefined}
+                    error={false}
+                  />
+                  {touched.password && errors.password && (
+                    <ErrorMessage message={errors.password} />
+                  )}
+                </View>
+                <View style={authScreen_styles.bottomContainer}>
+                  <CustomButton
+                    title={'Sign Up'}
+                    btnStyles={undefined}
+                    textStyles={undefined}
+                    onPress={() => handleSubmit()}
+                  />
+                  <View style={authScreen_styles.linkContainer}>
+                    <Text style={authScreen_styles.simpleText}>
+                      Already have an account ?{' '}
+                    </Text>
+                    <Text
+                      style={authScreen_styles.link}
+                      onPress={() => {
+                        navigation.navigate('LoginScreen');
+                      }}>
+                      {' '}
+                      Login{' '}
+                    </Text>
+                  </View>
+                </View>
+              </>
+            )}
+          </Formik>
         </KeyboardAwareScrollView>
       </View>
     </View>

@@ -1,4 +1,4 @@
-import {TextInputProps, ButtonProps} from 'react-native';
+import {TextInputProps, ButtonProps, PressableProps} from 'react-native';
 
 // Custom Button
 export interface CustomButtonProps extends ButtonProps {
@@ -11,9 +11,15 @@ export interface CustomInputFieldProps extends TextInputProps {
   icon: string;
   type: 'password' | undefined;
   styles: Object | undefined;
+  error: boolean;
 }
 
 // Custom Loading Spinner
 export interface CustomLoadingSpinnerProps {
   isLoading: boolean;
+}
+
+export interface CustomCheckboxProps extends PressableProps {
+  title: string;
+  isChecked: boolean;
 }
