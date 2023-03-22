@@ -13,6 +13,7 @@ import uuid from 'react-native-uuid';
 import ErrorMessage from '../../Components/Custom/ErrorMessage';
 import {Formik} from 'formik';
 import {signUpValidationSchema} from '../../Models/yup.models';
+import messaging from '@react-native-firebase/messaging';
 
 const RegisterScreen = () => {
   const navigation = useNavigation<authStackNavigationType>();
@@ -37,11 +38,16 @@ const RegisterScreen = () => {
               email: '',
               password: '',
             }}
-            onSubmit={values => {
-              handleRegister({
-                ...values,
-                id: uuid.v1().toString(),
-              });
+            onSubmit={async values => {
+              await messaging()
+                .getToken()
+                .then(token => {
+                  handleRegister({
+                    ...values,
+                    id: uuid.v1().toString(),
+                    token,
+                  });
+                });
             }}>
             {({values, handleChange, errors, touched, handleSubmit}) => (
               <>

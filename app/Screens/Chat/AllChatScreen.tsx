@@ -7,7 +7,6 @@ import SearchBar from '../../Components/User/SearchBar';
 import UserItem from '../../Components/User/UserItem';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../Redux/store';
-import LogoutButton from '../../Components/User/LogoutButton';
 import {
   handleClearMessages,
   handleCreateChatList,
@@ -18,7 +17,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useFocusEffect} from '@react-navigation/native';
 import {COLORS} from '../../Utils/Colors';
 import {navigate} from '../../Helper/navigationHelper';
-import ChatListModel from '../../Models/ChatListModel';
 import EmptyMessage from '../../Components/Custom/EmptyMessage';
 import MenuComponent from '../../Components/Custom/MenuComponent';
 
@@ -26,7 +24,6 @@ const AllChatScreen = () => {
   const [search, setSearch] = useState('');
   const allChats = useSelector((state: RootState) => state.allChat);
   const currentUser = useSelector((state: RootState) => state.user);
-  // const [message, setMessage] = useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -44,6 +41,7 @@ const AllChatScreen = () => {
           onChangeText={text => setSearch(text)}
           placeholder="Search user to chat"
           styles={undefined}
+          error={false}
         />
         <MenuComponent />
       </View>

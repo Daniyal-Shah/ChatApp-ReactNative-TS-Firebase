@@ -32,6 +32,7 @@ const SingleChatScreen = ({route}: any) => {
       lastMsg: '',
       sendTime: undefined,
       unseenMessages: 0,
+      token: chatlist.token,
     };
     if (message && message !== '') {
       await handleSendMessage(

@@ -3,4 +3,5 @@ export default interface UserModal {
   name: String;
   email: String;
   password: String;
+  token: String;
 }

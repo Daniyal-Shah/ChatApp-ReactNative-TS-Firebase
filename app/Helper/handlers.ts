@@ -21,6 +21,7 @@ export const handleRegister = async (payload: UserModal) => {
 
     if (!alreadyExists) {
       // Api hitting for sinup
+
       await api.signupUser(payload);
 
       // Dispatch action to off the loading
@@ -45,6 +46,7 @@ export const handleRegister = async (payload: UserModal) => {
     Toast.show({
       render: () => errorToast('Error In Adding User'),
     });
+    store.dispatch(loadingOff());
   }
 };
 
@@ -63,6 +65,7 @@ export const handleLogin = async (
       name: '',
       email: '',
       password: '',
+      token: '',
     };
     user = await api.loginUser(email);
     if (user?.password === password) {
@@ -182,6 +185,7 @@ export const handleSendMessage = async (
     store.dispatch(loadingOn());
 
     await api.sendMessage(sender, reciever, message, roomId, unseenMessages);
+    await api.sendNotification(reciever.token, reciever.name, message);
 
     // Dispatch action to off the loading
     store.dispatch(loadingOff());

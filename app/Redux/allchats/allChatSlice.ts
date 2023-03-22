@@ -32,6 +32,7 @@ export const allChatSlice = createSlice({
               lastMsg: action.payload.lastMsg,
               sendTime: action.payload.sendTime,
               unseenMessages: action.payload.unseenMessages,
+              token: item.token,
             };
 
             return newObj;

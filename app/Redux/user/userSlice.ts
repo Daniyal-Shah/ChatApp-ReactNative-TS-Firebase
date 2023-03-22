@@ -7,6 +7,7 @@ const initialState: UserModal = {
   name: '',
   email: '',
   password: '',
+  token: '',
 };
 
 export const userSlice = createSlice({

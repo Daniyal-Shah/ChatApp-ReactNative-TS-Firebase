@@ -9,14 +9,18 @@ import store from '../Redux/store';
 import {addMessage, loadMessages} from '../Redux/messages/messagesSlice';
 import {sortByDate} from '../Helper/filter';
 import {loadChat, updateChat} from '../Redux/allchats/allChatSlice';
-import ChatUpdateModel from '../Models/ChatUpdateModel';
+import axios from 'axios';
 
 class API {
+  fcme: string;
+  fcm_api: string;
   endpoint: string;
   reference: any;
 
-  constructor(url: string) {
+  constructor(url: string, fcme: string, fcm_api: string) {
     this.endpoint = url;
+    this.fcme = fcme;
+    this.fcm_api = fcm_api;
     this.reference = firebase.app().database(this.endpoint);
   }
 
@@ -75,6 +79,7 @@ class API {
             roomId,
             sendTime: undefined,
             unseenMessages: 0,
+            token: currentUser.token,
           };
           const otherUserData: ChatListModel = {
             id: otherUser.id,
@@ -84,6 +89,7 @@ class API {
             roomId,
             sendTime: undefined,
             unseenMessages: 0,
+            token: otherUser.token,
           };
 
           firebase
@@ -108,6 +114,7 @@ class API {
             roomId: snapshot.val().roomId,
             sendTime: undefined,
             unseenMessages: 0,
+            token: otherUser.token,
           };
           return otherUserData;
         }
@@ -190,9 +197,34 @@ class API {
         }
       });
   }
+
+  // Send Notifications
+  async sendNotification(token: String, title: String, body: String) {
+    console.log(token);
+    axios.post(
+      this.fcme,
+      // Data
+      {
+        to: token,
+        notification: {
+          title,
+          body,
+        },
+      },
+      // Headers
+      {
+        headers: {
+          'Content-type': 'Application/json',
+          Authorization: this.fcm_api,
+        },
+      },
+    );
+  }
 }
 
 // Using ip of local system because backend api are running on local system
 export const api = new API(
   'https://chatapp-b10e9-default-rtdb.asia-southeast1.firebasedatabase.app/',
+  'https://fcm.googleapis.com/fcm/send',
+  'key=AAAAwZh9IlU:APA91bExgp6odRm0arIGqsNSC1FwsewDDQvIUJem5yA2FhaSNyGfvT88MQLbViaZ9gqC0151WkbvHgEUgANHZHhz3Lhjo1Kf_7kvr9FtE9X8joc3Wbor1KTXDujl5BA6Q4Tv9hGZfXMe',
 );

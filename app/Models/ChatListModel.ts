@@ -6,4 +6,5 @@ export default interface ChatListModel {
   lastMsg: String;
   sendTime: String | undefined;
   unseenMessages: number;
+  token: String;
 }
