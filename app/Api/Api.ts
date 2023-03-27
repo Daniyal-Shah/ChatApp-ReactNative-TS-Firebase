@@ -40,13 +40,13 @@ class API {
   }
 
   // Get user method
-  async getUser(email: String): Promise<UserModel> {
+  async getUser(email: String): Promise<boolean> {
     return this.reference
       .ref('/users/')
       .orderByChild('email')
       .equalTo(email)
       .once('value')
-      .then((snapshot: any) => Object.values(snapshot.val()));
+      .then((snapshot: any) => snapshot.exists());
   }
 
   // Fetch All Users Method

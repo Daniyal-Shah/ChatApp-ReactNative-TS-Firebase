@@ -17,6 +17,8 @@ export const handleRegister = async (payload: UserModal) => {
     // Dispatch action to on the loading
     store.dispatch(loadingOn());
 
+    console.log('Register Handler');
+
     let alreadyExists = await api.getUser(payload.email);
 
     if (!alreadyExists) {
