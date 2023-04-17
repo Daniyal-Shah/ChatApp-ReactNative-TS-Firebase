@@ -16,4 +16,5 @@ export interface ChatFooter_Prop {
   message: string | undefined;
   setMessage: Function;
   handleMessage: Function;
+  testID: string;
 }

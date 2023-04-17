@@ -8,11 +8,17 @@ import UserModal from '../../Models/UserModel';
 import ChatListModel from '../../Models/ChatListModel';
 import {ChatFooter_Prop} from '../../Models/ComponentsProps';
 
-const ChatFooter = ({message, setMessage, handleMessage}: ChatFooter_Prop) => {
+const ChatFooter = ({
+  message,
+  setMessage,
+  handleMessage,
+  testID,
+}: ChatFooter_Prop) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
         <TextInput
+          testID={testID}
           placeholder="Type somthing.."
           multiline={true}
           value={message}

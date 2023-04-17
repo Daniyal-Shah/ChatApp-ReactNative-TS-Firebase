@@ -2,16 +2,11 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../Utils/Colors';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useNavigation} from '@react-navigation/native';
 import {getFirstLetters} from '../../Helper/filter';
 import {screenDimensions} from '../../Utils/Screen';
-import {handleClearMessages} from '../../Helper/handlers';
 import BackButton from '../Custom/BackButton';
 
 const ChatHeader = ({avatar_url, name}: any) => {
-  const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <BackButton />
@@ -20,12 +15,6 @@ const ChatHeader = ({avatar_url, name}: any) => {
           <Text style={styles.nameLetters}>{getFirstLetters(name)}</Text>
         </View>
       </View>
-      {/* <Image
-        source={{
-          uri: avatar_url,
-        }}
-        style={styles.image}
-      /> */}
 
       <Text style={styles.name}>{name}</Text>
     </View>

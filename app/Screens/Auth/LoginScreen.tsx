@@ -19,7 +19,7 @@ import {loginValidationSchema} from '../../Models/yup.models';
 const LoginScreen = () => {
   const [email, setEmail] = useState('daniyal.shah@venturedive.com');
   const [password, setPassword] = useState('12345');
-  const [rememberme, setRememberme] = useState(true);
+  const [rememberme, setRememberme] = useState(false);
 
   const authNavigation = useNavigation<authStackNavigationType>();
 
@@ -32,7 +32,7 @@ const LoginScreen = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getLastRememberUser();
+      // getLastRememberUser();
     }, []),
   );
 
@@ -54,7 +54,7 @@ const LoginScreen = () => {
             validationSchema={loginValidationSchema}
             initialValues={{email: '', password: ''}}
             onSubmit={values => {
-              handleLogin(values.email, values.password, rememberme);
+              // handleLogin(values.email, values.password, rememberme);
             }}>
             {({values, handleChange, errors, touched, handleSubmit}) => (
               <>
@@ -67,6 +67,7 @@ const LoginScreen = () => {
                     type={undefined}
                     styles={authScreen_styles.emailInput}
                     error={false}
+                    testID="email"
                   />
                   <CustomInputField
                     icon="lock"
@@ -76,6 +77,7 @@ const LoginScreen = () => {
                     type={'password'}
                     styles={undefined}
                     error={false}
+                    testID="password"
                   />
                   <CustomCheckbox
                     title={'Remember Me'}

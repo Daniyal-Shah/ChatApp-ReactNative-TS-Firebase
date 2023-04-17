@@ -14,6 +14,7 @@ const CustomInputField = ({
   type,
   styles,
   error,
+  testID,
 }: CustomInputFieldProps) => {
   const [focus, setFocus] = useState(false);
   const [showPass, setShowPass] = useState(type === 'password' ? true : false);
@@ -81,6 +82,7 @@ const CustomInputField = ({
         secureTextEntry={showPass}
         value={value}
         onChangeText={onChangeText}
+        testID={testID}
       />
 
       {type === 'password' && (
